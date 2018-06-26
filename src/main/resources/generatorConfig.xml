@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+    <!--导入数据库配置文件-->
+    <properties resource="datasource.properties"></properties>
+
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+        <jdbcConnection driverClass="${db.driverClassName}"
+                        connectionURL="${db.url}"
+                        userId="${db.username}"
+                        password="${db.password}">
+        </jdbcConnection>
+
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+        <!--指定javabean的生成策略;javabean的目标包路径和目标工程 -->
+        <javaModelGenerator targetPackage="com.mmall.pojo" targetProject=".\src\main\java">
+            <property name="enableSubPackages" value="false" />
+            <property name="trimStrings" value="true" />
+            <property name="constructorBased" value="true"/>
+        </javaModelGenerator>
+        <!--sql映射生成策略 -->
+        <sqlMapGenerator targetPackage="mappers"  targetProject=".\src\main\resources">
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+        <!-- 指定mapper所在位置 -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.mmall.dao"  targetProject=".\src\main\java">
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+        <!--指定要逆向分析的表，根据表创建javabean-->
+        <table tableName="mmall_shipping" domainObjectName="Shipping" ></table>
+        <table tableName="mmall_cart" domainObjectName="Cart" ></table>
+        <table tableName="mmall_category" domainObjectName="Category" ></table>
+        <table tableName="mmall_order" domainObjectName="Order" ></table>
+        <table tableName="mmall_order_item" domainObjectName="OrderItem" ></table>
+        <table tableName="mmall_pay_info" domainObjectName="PayInfo" ></table>
+        <table tableName="mmall_product" domainObjectName="Product" >
+            <columnOverride column="detail" jdbcType="varchar"/>
+            <!--将数据库中的text类型转换为java中的String类型-->
+            <columnOverride column="sub_images" jdbcType="varchar"/>
+        </table>
+        <table tableName="mmall_user" domainObjectName="User" ></table>
+    </context>
+
+</generatorConfiguration>
